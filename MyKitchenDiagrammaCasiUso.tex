@@ -1,0 +1,50 @@
+\documentclass[a4paper,addpoints]{article}
+\usepackage{amsfonts,amssymb,amsmath, amsthm}
+\usepackage{xcolor}
+\usepackage{pgf,tikz,pgfplots}
+\pgfplotsset{compat=1.15}
+\usepgfplotslibrary{fillbetween}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usepackage{tabu}
+
+\usepackage{tikz}
+\usetikzlibrary {shapes , arrows , fit , calc, positioning}
+\tikzset{box/.style={draw, rectangle, rounded corners, thick, node distance =7 em, text width =6 em, text centered, minimum height =2.5 em}}
+\tikzset{line/.style={draw, thick, -latex'}}
+
+\usepackage{tikz-uml}
+\tikzumlset{actor below=0.4cm, fill usecase=white, fill class=white, text=black, draw=black}
+
+
+\begin{document}
+
+
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{umlsystem}[x=4] {Sito per ricette}
+        \umlusecase[x=4, y=3, width=1.8cm] {Cambiare lingua del sito}  
+        \umlusecase[x=4, y=6, width=1.8cm] {Visualizzare homepage}
+        \umlusecase[x=4, y=9, width=1.8cm] {Caso d'uso con due attori}
+        \umlusecase[x=4, y=12, width=1.8cm] {Caso d'uso con due attori}
+        \umlusecase[x=4, width=1.8cm] {Caso d'uso con due attori}
+        \umlusecase[x=4, width=1.8cm] {Caso d'uso con due attori}
+        \umlusecase[x=4, width=1.8cm] {Caso d'uso con due attori}
+        \umlusecase[x=4, width=1.8cm] {Caso d'uso con due attori}
+        \umlusecase[x=4, width=1.8cm] {Caso d'uso con due attori}
+    \end{umlsystem}
+        
+    \umlactor{Visitatore} 
+    
+    \umlactor[x=12, y=-1.5] {Utente}
+
+    \umlassoc{Visitatore}{usecase-1}
+        
+    \umlassoc{Visitatore}{usecase-4}
+    \umlassoc{Utente}{usecase-4}
+\end{tikzpicture}
+\end{center}
+
+\end{document} 
