@@ -1,0 +1,47 @@
+\documentclass[a4paper,addpoints]{article}
+\usepackage{amsfonts,amssymb,amsmath, amsthm}
+\usepackage{xcolor}
+\usepackage{pgf,tikz,pgfplots}
+\pgfplotsset{compat=1.15}
+\usepgfplotslibrary{fillbetween}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usepackage{tabu}
+
+\usepackage{tikz}
+\usetikzlibrary {shapes , arrows , fit , calc, positioning}
+\tikzset{box/.style={draw, rectangle, rounded corners, thick, node distance =7 em, text width =6 em, text centered, minimum height =2.5 em}}
+\tikzset{line/.style={draw, thick, -latex'}}
+
+\usepackage{tikz-uml}
+\tikzumlset{actor below=0.4cm, fill usecase=white, fill class=white, text=black, draw=black}
+
+
+\begin{document}
+\begin{center}
+\begin{tikzpicture}
+
+\umlclass[x=1]{Visitatore}{Forza : int \\ Destrezza : int \\ Costituzione : int \\ Intelligenza : int \\ Saggezza: int \\ Carisma: int}{}
+\umlsimpleclass[x=8, y=1.5] {Gilda}
+\umlHVassoc[name=assoc, mult1=*, mult2=0..1, pos=1.7]{Visitatore}{Gilda} 
+\umlassocclass[x=5.3,y=-2]{Contratto}{assoc-1}{Titolo: string \\ Stipendio : int}{}
+
+\umlsimpleclass[x=-4]{Classe}
+\umlassoc[mult1=*, mult2=1..4]{Visitatore}{Classe} 
+
+\umlclass[x=-4, y=-4]{Livello}{Capacità : string}{}
+\umlcompo[mult1=1, mult2=20]{Classe}{Livello}
+
+\umlclass[x=1, y = -5]{Utente}{Esperienza : int}{saliDiLivello(c : Classe) : void}
+\umlinherit{Utente}{Visitatore}
+
+\umlsimpleclass[x=8, y=-5] {Giocatore}
+\umlassoc[mult1=1, mult2=1..*]{Giocatore}{Utente} 
+
+\end{tikzpicture}
+\end{center}
+
+\end{document} 
+ 
+ 
