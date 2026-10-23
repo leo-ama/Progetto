@@ -1,65 +1,54 @@
-\documentclass[a4paper,addpoints]{article}
-\usepackage{amsfonts,amssymb,amsmath, amsthm}
-\usepackage{xcolor}
-\usepackage{pgf,tikz,pgfplots}
-\pgfplotsset{compat=1.15}
-\usepgfplotslibrary{fillbetween}
-\usepackage{mathrsfs}
-\usetikzlibrary{arrows}
-\usetikzlibrary{calc}
-\usepackage{tabu}
-
+\documentclass[a4paper]{article}
+\usepackage[margin=1.5cm]{geometry}
 \usepackage{tikz}
-\usetikzlibrary {shapes , arrows , fit , calc, positioning}
-\tikzset{box/.style={draw, rectangle, rounded corners, thick, node distance =7 em, text width =6 em, text centered, minimum height =2.5 em}}
-\tikzset{line/.style={draw, thick, -latex'}}
-
 \usepackage{tikz-uml}
-\tikzumlset{actor below=0.4cm, fill usecase=white, fill class=white, text=black, draw=black}
-
+\usepackage{adjustbox}
+\tikzumlset{fill usecase=white, text=black, draw=black}
 
 \begin{document}
 
-
-
 \begin{center}
+\begin{adjustbox}{max width=\textwidth}
 \begin{tikzpicture}
-    \begin{umlsystem}[x=4] {Sito per ricette}
-        \umlusecase[x=4, y=3, width=1.8cm] {Ricette suggerite}  
-        \umlusecase[x=4, y=6, width=1.8cm] {Ricerca per ingredienti}
-        \umlusecase[x=4, y=9, width=1.8cm] {Selezionare ricetta}
-        \umlusecase[x=4, y=12, width=1.8cm] {Login}
-        \umlusecase[x=4, width=1.8cm] {Visualizzare istruzioni ricetta}
-        \umlusecase[x=1, y=12, width=1.8cm] {Visualizzare homepage}
-        \umlusecase[x=1, y=9, width=1.8cm] {Registrazione con email}
-        \umlusecase[x=1, y=6, width=1.8cm] {Registrazione con password}
-        \umlusecase[x=1, y=3, width=1.8cm] {Cambiare lingua del sito}
-        \umlusecase[x=1, width=1.8cm] {Registrazione con nome utente}
-        \umlusecase[x=4, y=-2, width=1.8cm] {Filtro tipi di cibo}
-        \umlusecase[x=4, y=-4, width=1.8cm] {Inserire recensione}
-    \end{umlsystem}
-        
-    \umlactor{Visitatore} 
-    
-    \umlactor[x=12, y=-1.5] {Utente}
 
-    \umlassoc{Visitatore}{usecase-6}
-    \umlassoc{Visitatore}{usecase-7}
-    \umlassoc{Visitatore}{usecase-8}
-    \umlassoc{Visitatore}{usecase-9}
-    \umlassoc{Visitatore}{usecase-10}
+  \begin{umlsystem}{Sito per ricette}
+    % colonna sinistra
+    \umlusecase[name=home,   x=0, y=10, width=2.2cm]{Visualizzare homepage}
+    \umlusecase[name=lingua, x=0, y=8,  width=2.2cm]{Cambiare lingua}
+    \umlusecase[name=sugg,   x=0, y=6,  width=2.2cm]{Ricette suggerite}
+    \umlusecase[name=cerca,  x=0, y=4,  width=2.2cm]{Ricerca per ingredienti}
+    \umlusecase[name=filtro, x=0, y=2,  width=2.2cm]{Filtro tipi di cibo}
+    % colonna destra
+    \umlusecase[name=reg,    x=4.5, y=10, width=2.2cm]{Registrazione}
+    \umlusecase[name=sel,    x=4.5, y=8,  width=2.2cm]{Selezionare ricetta}
+    \umlusecase[name=istr,   x=4.5, y=6,  width=2.2cm]{Visualizzare istruzioni}
+    \umlusecase[name=login,  x=4.5, y=4,  width=2.2cm]{Login}
+    \umlusecase[name=rec,    x=4.5, y=2,  width=2.2cm]{Inserire recensione}
+  \end{umlsystem}
 
-    \umlassoc{Utente}{usecase-6}
-    \umlassoc{Utente}{usecase-5}
-    \umlassoc{Utente}{usecase-4}
-    \umlassoc{Utente}{usecase-3}
-    \umlassoc{Utente}{usecase-2}
-    \umlassoc{Utente}{usecase-1}
-    \umlassoc{Utente}{usecase-9}
-    \umlassoc{Utente}{usecase-11}
-    \umlassoc{Utente}{usecase-12}
-    
+  % Attori
+  \umlactor[x=-3.5, y=6]{Visitatore}
+  \umlactor[x=9.5,  y=3]{Utente}
+
+  % Visitatore
+  \umlassoc{Visitatore}{home}
+  \umlassoc{Visitatore}{lingua}
+  \umlassoc{Visitatore}{sugg}
+  \umlassoc{Visitatore}{cerca}
+  \umlassoc{Visitatore}{sel}
+  \umlassoc{Visitatore}{reg}
+
+  % Utente
+  \umlassoc{Utente}{login}
+  \umlassoc{Utente}{rec}
+
+  % Relazioni tra casi d'uso
+  \umlinclude{sel}{istr}
+  \umlinclude{rec}{login}
+  \umlextend{filtro}{cerca}
+
 \end{tikzpicture}
+\end{adjustbox}
 \end{center}
 
-\end{document} 
+\end{document}
