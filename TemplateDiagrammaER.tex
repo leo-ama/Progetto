@@ -1,0 +1,88 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+\usepackage{adjustbox}
+
+\tikzset{
+  entita/.style={draw, rectangle, thick, minimum width=2.4cm, minimum height=0.9cm, fill=white},
+  rel/.style={draw, diamond, aspect=2, thick, inner sep=1pt, fill=white},
+  attr/.style={draw, circle, inner sep=0pt, minimum size=0.18cm, fill=white},
+  idn/.style={draw, circle, inner sep=0pt, minimum size=0.18cm, fill=black},
+  card/.style={font=\small, inner sep=2pt}
+}
+
+\begin{document}
+
+\begin{center}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tikzpicture}
+
+  % ---------- ENTITA' ----------
+  \node[entita] (Utente)      at (0,0)   {Utente};
+  \node[entita] (Recensione)  at (7,0)   {Recensione};
+  \node[entita] (Ricetta)     at (14,0)  {Ricetta};
+  \node[entita] (TipoCibo)    at (14,6)  {TipoCibo};
+  \node[entita] (Ingrediente) at (14,-6) {Ingrediente};
+
+  % ---------- RELAZIONI ----------
+  \node[rel] (Scrive)   at (3.5,0)  {Scrive};
+  \node[rel] (Riguarda) at (10.5,0) {Riguarda};
+  \node[rel] (HaTipo)   at (14,3)   {HaTipo};
+  \node[rel] (Contiene) at (14,-3)  {Contiene};
+
+  % ---------- COLLEGAMENTI + CARDINALITA' ----------
+  \draw (Utente) -- node[card, above, pos=0.3] {(0,N)} (Scrive);
+  \draw (Scrive) -- node[card, above, pos=0.7] {(1,1)} (Recensione);
+
+  \draw (Recensione) -- node[card, above, pos=0.3] {(1,1)} (Riguarda);
+  \draw (Riguarda)   -- node[card, above, pos=0.7] {(0,N)} (Ricetta);
+
+  \draw (Ricetta) -- node[card, right, pos=0.3] {(1,N)} (HaTipo);
+  \draw (HaTipo)  -- node[card, right, pos=0.7] {(0,N)} (TipoCibo);
+
+  \draw (Ricetta)  -- node[card, right, pos=0.3] {(1,N)} (Contiene);
+  \draw (Contiene) -- node[card, right, pos=0.7] {(0,N)} (Ingrediente);
+
+  % ---------- ATTRIBUTI: Utente ----------
+  \node[idn,  label={[font=\small]above:nomeUtente}] (u1) at (-1.6,1.6) {};
+  \node[attr, label={[font=\small]above:email}]      (u2) at (0,1.9)    {};
+  \node[attr, label={[font=\small]above:password}]   (u3) at (1.6,1.6)  {};
+  \draw (Utente) -- (u1);  \draw (Utente) -- (u2);  \draw (Utente) -- (u3);
+
+  % ---------- ATTRIBUTI: Recensione ----------
+  \node[idn,  label={[font=\small]above:id}]    (r1) at (5.6,1.6) {};
+  \node[attr, label={[font=\small]above:voto}]  (r2) at (7,1.9)   {};
+  \node[attr, label={[font=\small]above:data}]  (r3) at (8.4,1.6) {};
+  \node[attr, label={[font=\small]below:testo}] (r4) at (7,-1.7)  {};
+  \draw (Recensione) -- (r1);  \draw (Recensione) -- (r2);
+  \draw (Recensione) -- (r3);  \draw (Recensione) -- (r4);
+
+  % ---------- ATTRIBUTI: Ricetta ----------
+  \node[idn,  label={[font=\small]right:id}]                 (c1) at (16.4,1.6)  {};
+  \node[attr, label={[font=\small]right:titolo}]             (c2) at (16.4,0.8)  {};
+  \node[attr, label={[font=\small]right:istruzioni}]         (c3) at (16.4,0)    {};
+  \node[attr, label={[font=\small]right:tempoPreparazione}]  (c4) at (16.4,-0.8) {};
+  \node[attr, label={[font=\small]right:difficolta}]         (c5) at (16.4,-1.6) {};
+  \foreach \i in {1,...,5} { \draw (Ricetta) -- (c\i); }
+
+  % ---------- ATTRIBUTI: TipoCibo ----------
+  \node[idn, label={[font=\small]right:nome}] (t1) at (16.2,6) {};
+  \draw (TipoCibo) -- (t1);
+
+  % ---------- ATTRIBUTI: Ingrediente ----------
+  \node[idn, label={[font=\small]right:nome}] (i1) at (16.2,-6) {};
+  \draw (Ingrediente) -- (i1);
+
+  % ---------- ATTRIBUTI della relazione Contiene ----------
+  \node[attr, label={[font=\small]left:quantita}] (q1) at (11.2,-2.4) {};
+  \node[attr, label={[font=\small]left:unita}]    (q2) at (11.2,-3.6) {};
+  \draw (Contiene) -- (q1);  \draw (Contiene) -- (q2);
+
+\end{tikzpicture}
+\end{adjustbox}
+\end{center}
+
+\end{document}
